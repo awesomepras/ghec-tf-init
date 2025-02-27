@@ -18,6 +18,9 @@ jobs:
         with:
           terraform_version: 1.0.0
 
+      - name: Debug Environment Variables
+        run: env | grep 'TERRAFORM_CLOUD_TOKEN'
+
       - name: Terraform Init
         env:
           TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}  # Use the token from GitHub Secrets
@@ -26,9 +29,6 @@ jobs:
       - name: Terraform Apply
         env:
           TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}  # Use the token from GitHub Secrets
-          # GITHUB_TOKEN: ${{ secrets.TF_INIT_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub token for API access
         run: |
           terraform workspace select github-management || terraform workspace new github-management
-          terraform apply -auto-approve 
-
