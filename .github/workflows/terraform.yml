@@ -19,7 +19,6 @@ jobs:
           terraform_version: 1.0.0
 
       - name: Terraform Init
-        run: terraform init
         env:
           TF_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}  # Use the token from GitHub Secrets
         run: terraform init
