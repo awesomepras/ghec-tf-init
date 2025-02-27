@@ -1,6 +1,7 @@
 variable "github_token" {
   type        = string
   description = "GitHub personal access token"
+  sensitive   = true
 }
 
 variable "org_name" {
