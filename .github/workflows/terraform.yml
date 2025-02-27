@@ -27,14 +27,20 @@ jobs:
             echo "TERRAFORM_CLOUD_TOKEN is set"
           fi
 
-      - name: Terraform Init
+      - name: Export Terraform Cloud Token
+        run: echo "Exporting TERRAFORM_CLOUD_TOKEN"
         env:
-          TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}  # Use the token from GitHub Secrets
+          TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
+
+      - name: Terraform Init
         run: terraform init
+        env:
+          TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
 
       - name: Terraform Apply
-        env:
-          TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}  # Use the token from GitHub Secrets
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub token for API access
         run: |
           terraform workspace select github-management || terraform workspace new github-management
+          terraform apply -auto-approve
+        env:
+          TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub token for API access
