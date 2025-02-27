@@ -27,7 +27,7 @@ jobs:
       - name: Terraform Apply
         env:
           GITHUB_TOKEN: ${{ secrets.TF_INIT_TOKEN }}
-           TF_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}  # Use the token from GitHub Secrets
+          TF_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}  # Use the token from GitHub Secrets
         run: |
           terraform workspace select github-management || terraform workspace new github-management
           terraform apply -auto-approve 
