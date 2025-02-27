@@ -19,7 +19,13 @@ jobs:
           terraform_version: 1.0.0
 
       - name: Debug Environment Variables
-        run: env | grep 'TERRAFORM_CLOUD_TOKEN'
+        run: |
+          if [ -z "${{ secrets.TERRAFORM_CLOUD_TOKEN }}" ]; then
+            echo "TERRAFORM_CLOUD_TOKEN is not set"
+            exit 1
+          else
+            echo "TERRAFORM_CLOUD_TOKEN is set"
+          fi
 
       - name: Terraform Init
         env:
