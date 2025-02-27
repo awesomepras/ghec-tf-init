@@ -1,0 +1,34 @@
+name: Terraform
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Terraform CLI
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.0
+
+      - name: Terraform Login
+        run: |
+          echo "${{ secrets.TERRAFORM_CLOUD_TOKEN }}" | terraform login
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Apply
+        env:
+          GITHUB_TOKEN: ${{ secrets.TF_INIT_TOKEN }}
+        run: |
+          terraform workspace select github-management || terraform workspace new github-management
+          terraform apply -auto-approve -var "github_token=${{ secrets.TF_INIT_TOKEN }}" -var "org_name=my-org" -var "repo_name=my-new-repo"
+
