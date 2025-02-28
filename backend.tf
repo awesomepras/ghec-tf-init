@@ -1,11 +1,13 @@
 terraform {
   backend "remote" {
     hostname     = "app.terraform.io"
-    organization = "gitprasorg"  # Replace with your Terraform Cloud organization name
+    # --- not required for VCS workflow  ---
+    # organization = "gitprasorg" 
 
-    workspaces {
-      name = "github-management"  # Your workspace name
-    }
+    # workspaces {
+    #   name = "github-management"  # Your workspace name
+    # }
+    # ---------------------------------------
   }
 }
 
