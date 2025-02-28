@@ -1,5 +1,5 @@
 terraform {
-  required_version = "~> 1.11.0" # Locking Terraform version
+  required_version = "~> 1.10.0" # Locking Terraform version
 
   required_providers {
     tfe = {
