@@ -14,3 +14,8 @@ provider "github" {
   owner = var.org_name
 }
 
+provider "tfe" {
+  hostname = app.terraform.io
+  organization = var.org_name
+  token    = var.tfe_token
+}

@@ -2,6 +2,7 @@ variable "github_token" {
   type        = string
   description = "GitHub personal access token"
   sensitive   = true
+  default = "{ secrets.GITHUB_TOKEN }"
 }
 
 variable "org_name" {
@@ -14,3 +15,9 @@ variable "repo_name" {
   description = "Name of the repository to create"
 }
 
+variable "tfe_token" {
+  type        = string
+  description = "Terraform Enterprise token"
+  sensitive   = true
+  default = "{ secrets.TERRAFORM_CLOUD_TOKEN }"
+}
