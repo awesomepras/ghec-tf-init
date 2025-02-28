@@ -15,12 +15,4 @@ terraform {
       version = ">= 4.3.0, < 5.0.0"
     }
   }
-
-  cloud {
-    organization = "gitprasorg"
-
-    workspaces {
-      name = "github-management"
-    }
-  }
 }
