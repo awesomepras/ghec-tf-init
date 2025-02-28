@@ -19,8 +19,26 @@ jobs:
       - name: Set up Terraform CLI
         uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: 1.0.0
-
+          terraform_version: 1.7.5
+      - name: Verify Terraform and Environment
+        run: |
+          terraform version
+          echo "TERRAFORM_CLOUD_TOKEN length: ${#TERRAFORM_CLOUD_TOKEN}"
+  
+      - name: Set Terraform Cloud Credentials
+        run: |
+          mkdir -p ~/.terraform.d
+          cat <<EOF > ~/.terraform.d/credentials.tfrc.json
+          {
+            "credentials": {
+              "app.terraform.io": {
+                "token": "${{ secrets.TERRAFORM_CLOUD_TOKEN }}"
+              }
+            }
+          }
+          EOF
+          cat ~/.terraform.d/credentials.tfrc.json
+  
       # - name: Debug Environment Variables
       #   run: |
       #     if [ -z "${{ secrets.TERRAFORM_CLOUD_TOKEN }}" ]; then
@@ -36,7 +54,11 @@ jobs:
       #     TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
 
       - name: Terraform Init
-        run: terraform init
+        run: |
+          terraform init
+          env | grep -E 'TERRAFORM|TF'
+
+
 
       - name: Terraform Apply
         run: |
