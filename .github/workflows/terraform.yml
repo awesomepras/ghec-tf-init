@@ -54,16 +54,11 @@ jobs:
       #     TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
 
       - name: Terraform Init
-        run: |
-          terraform init
-          env | grep -E 'TERRAFORM|TF'
+        run: terraform init
 
 
+      - name: Terraform Plan
+        run: terraform plan -input=false
 
       - name: Terraform Apply
-        run: |
-          terraform workspace select github-management || terraform workspace new github-management
-          terraform apply -auto-approve
-        # env:
-        #   TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
-        #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub token for API access
+        run: terraform apply -auto-approve
